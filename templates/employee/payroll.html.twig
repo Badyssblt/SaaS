@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fiche de paie{% endblock %}
+
+
+
+{% block body %}
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            border: 1px solid #ccc;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+
+<div class="container">
+    {% set hourlyRate = employee.salary %}
+    {% set totalPayment = hourlyRate * hours %}
+    {% set taxRate = 0.15 %}
+    {% set taxAmount = totalPayment * taxRate %}
+    {% set socialRate = 0.10 %}
+    {% set socialAmount = totalPayment * socialRate %}
+    {% set totalTax = taxAmount + socialAmount %}
+    <h2>Fiche de paie de {{ employee.firstName }}</h2>
+    <table>
+        <tr>
+            <th>Élément</th>
+            <th>Détails</th>
+        </tr>
+        <tr>
+            <td>Nom:</td>
+            <td>{{ employee.firstName ~ " " ~ employee.lastName }}</td>
+        </tr>
+        <tr>
+            <td>Poste:</td>
+            <td>{{ employee.jobTitle }}</td>
+        </tr>
+        <tr>
+            <td>Salaire de base:</td>
+            <td>{{ hourlyRate }}€ /heure</td>
+        </tr>
+        <tr>
+            <td>Heures travaillées:</td>
+            <td>{{ hours }} heures</td>
+        </tr>
+        <tr>
+            <td>Salaire brut:</td>
+            <td>{{ totalPayment }} €</td>
+        </tr>
+        <tr>
+            <td>Retenue fiscale:</td>
+            <td>{{ taxAmount }} €</td>
+        </tr>
+        <tr>
+            <td>Retenue sociale:</td>
+            <td>{{ socialAmount }} €</td>
+        </tr>
+        <tr>
+            <td>Total des retenues:</td>
+            <td>{{ totalTax }} €</td>
+        </tr>
+        <tr>
+            <td>Salaire net à payer:</td>
+            <td>{{ totalPayment - totalTax }} €</td>
+        </tr>
+    </table>
+</div>
+{% endblock %}
