@@ -39,7 +39,7 @@ class EmployeeController extends AbstractController
 
 
 
-    #[Route('/companies/{id}/employee/{employeeId}', name: "app_company_add_employee", methods: ['PATCH'])]
+    #[Route('/companies/{id}/employee/{employeeId}', name: "app_company_edit_employee", methods: ['PATCH'])]
     public function editEmployee(int $employeeId, SerializerInterface $serializer, Request $request, Company $company, EntityManagerInterface $manager, TokenValidator $tokenValidator, EmployeesRepository $employeesRepository)
     {
         $email = $tokenValidator->getToken()['username'];
@@ -117,5 +117,14 @@ class EmployeeController extends AbstractController
         if (!$isInCompany) return $this->json(['message' => 'Cet employé ne fait pas partie de votre entreprise'], Response::HTTP_UNAUTHORIZED);
 
         return $pdfGenerator->generatePayrollPdf($employee);
+    }
+
+    #[Route('/employees/{id}', name: 'app_employee_retrieve', methods: ["GET"])]
+    public function retrieveHours(Employees $employees, CompanyUser $companyUser)
+    {
+        $isInCompany = $companyUser->checkEmployee($employees);
+        if (!$isInCompany) return $this->json(['message' => 'Cet employé ne fait partie d\'aucune de vos entreprises']);
+
+        return $this->json($employees, Response::HTTP_OK, [], ['groups' => ["item:employee"]]);
     }
 }

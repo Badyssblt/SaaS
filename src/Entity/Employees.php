@@ -32,11 +32,11 @@ class Employees
     private ?\DateTimeImmutable $birth_at = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["item:employee", 'item:leave'])]
+    #[Groups(["item:employee", 'item:leave', "item:company"])]
     private ?string $email = null;
 
     #[ORM\Column]
-    #[Groups(["item:employee"])]
+    #[Groups(["item:employee", "item:company"])]
     private ?int $phone_number = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -48,15 +48,15 @@ class Employees
     private ?\DateTimeImmutable $hired_at = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["item:employee", 'item:leave'])]
+    #[Groups(["item:employee", 'item:leave', "item:company"])]
     private ?string $job_title = null;
 
     #[ORM\Column]
-    #[Groups(["item:employee", 'item:leave'])]
+    #[Groups(["item:employee", 'item:leave', "item:company"])]
     private ?float $salary = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["item:employee", 'item:leave'])]
+    #[Groups(["item:employee", 'item:leave', "item:company"])]
     private ?string $status = null;
 
     #[ORM\Column]
@@ -75,7 +75,7 @@ class Employees
      * @var Collection<int, WorkDay>
      */
     #[ORM\OneToMany(targetEntity: WorkDay::class, mappedBy: 'employee', orphanRemoval: true)]
-    #[Groups(["item:employee"])]
+    #[Groups(["item:employee", "item:company"])]
     private Collection $workDays;
 
     /**

@@ -4,17 +4,22 @@ namespace App\Service;
 
 use App\Entity\User;
 use App\Entity\Employees;
+use App\Repository\EmployeesRepository;
 use App\Repository\UserRepository;
+use App\Repository\WorkDayRepository;
+use DateTimeImmutable;
 
 class EmployeeService
 {
     private UserRepository $userRepository;
     private TokenValidator $tokenValidator;
+    private WorkDayRepository $workDayRepository;
 
-    public function __construct(UserRepository $userRepository, TokenValidator $tokenValidator)
+    public function __construct(UserRepository $userRepository, TokenValidator $tokenValidator, workDayRepository $workDayRepository)
     {
         $this->userRepository = $userRepository;
         $this->tokenValidator = $tokenValidator;
+        $this->workDayRepository = $workDayRepository;
     }
 
     /**

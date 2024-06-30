@@ -45,6 +45,7 @@ class CompanyController extends AbstractController
         return $this->json($companies, Response::HTTP_OK, [], ['groups' => ['item:company']]);
     }
 
+
     #[Route('/companies/{id}', name: "app_company_single", methods: ["GET"])]
     public function retrievesCompany(Company $company, Request $request, TokenValidator $tokenValidator)
     {

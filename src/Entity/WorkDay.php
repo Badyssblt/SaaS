@@ -12,15 +12,15 @@ class WorkDay
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["item:employee"])]
+    #[Groups(["item:employee", "item:company"])]
     private ?int $id = null;
 
     #[ORM\Column]
-    #[Groups(["item:employee"])]
+    #[Groups(["item:employee", "item:company"])]
     private ?\DateTimeImmutable $date = null;
 
     #[ORM\Column]
-    #[Groups(["item:employee"])]
+    #[Groups(["item:employee", "item:company"])]
     private ?int $hours = null;
 
     #[ORM\ManyToOne(inversedBy: 'workDays')]
