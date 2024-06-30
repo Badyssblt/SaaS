@@ -1,15 +1,30 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import React, { useState } from 'react';
+import AsideMenu from './components/aside/AsideMenu';
+import MainDashboard from './components/dashboard/MainDashboard';
+import { CompanyProvider, useCompany } from './context/CompanyContext';
+import Form from './components/Forms/Form'; // Importez le composant Form
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import Dashboard from './pages/Dashboard';
+
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Dashboard/>
+  },
+  {
+    path: "/employees",
+    element: <div>Tous les employés</div>
+  }
+]);
+
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <>
-      <p>test</p>
-    </>
-  )
+    <RouterProvider router={router}/>
+  );
 }
 
-export default App
+
+export default App;
