@@ -13,7 +13,7 @@ function EmployeeModal({employee, isOpen, setOpen}) {
 
     const fetchAllData =  async () => {
         try {
-            const response = await axiosInstance.get('/api/employees/3');
+            const response = await axiosInstance.get(`/api/employees/${employee.id}`);
             setEmployeeData(response.data);
         } catch (error) {
             console.log(error);

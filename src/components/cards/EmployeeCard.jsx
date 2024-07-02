@@ -8,8 +8,16 @@ import Button from '../buttons/Button';
 import Form from '../Forms/Form';
 import Input from '../inputs/Input';
 import { useCompany } from '../../context/CompanyContext';
+import Cookies from 'js-cookie';
 
-function EmployeeCard({employee, onClick}) {
+/**
+ * EmployeeCard
+ * @param {any} {employee
+ * @param {any} onClick
+ * @param {any} loader Specify if need to reload the page or use CompanyContext to re-render}
+ * @returns {any}
+ */
+function EmployeeCard({employee, onClick, loader}) {
 
   const [employeeData, setEmployeeData] = useState();
   const { fetchCompany } = useCompany();
@@ -47,8 +55,14 @@ function EmployeeCard({employee, onClick}) {
 
   const fireEmployee = async () => {
     try {
-      const response = await axiosInstance.delete(`/api/companies/3/employee/${employee.id}`);
-      console.log(response);
+      const response = await axiosInstance.delete(`/api/companies/${Cookies.get('company')}/employee/${employee.id}`);
+      if(response.status === 204){
+        if(loader){
+          window.location.reload();
+        }else {
+          fetchCompany();
+        }
+      }
     } catch (error) {
       
     }
@@ -73,7 +87,11 @@ const formatDate = (dateString) => {
 
     try {
       const response = await axiosInstance.patch(`/api/companies/3/employee/${employee.id}`, updatedFormData);
-      fetchCompany();
+      if(loader){
+        window.location.reload();
+      }else {
+        fetchCompany();
+      }
     } catch (error) {
       
     }
@@ -110,7 +128,7 @@ const formatDate = (dateString) => {
       </div>
       <div>
         <p className='text-slate-400'>Status</p>
-        <p className='font-medium'>{employee.status}</p>
+        <p className='font-medium'>{employee.status == "Leave" ? "En congé" : "Actif"}</p>
       </div>
       <div>
       <Modals styleButton="primary" route={`/api/employees/${employee.id}/hours`} setData={setEmployeeData} buttonText={<><p>Plus</p><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">

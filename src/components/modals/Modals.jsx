@@ -13,9 +13,13 @@ import axiosInstance from '../../axiosInstance';
  * @param {any} buttonText Text into open modal button
  * @returns {any}
  */
-function Modals({children, route, setData, buttonText, styleButton}) {
+function Modals({children, route, setData, buttonText, styleButton, open}) {
 
-    const [isOpen, setIsOpen] = useState();
+    const [isOpen, setIsOpen] = useState(false);
+   useEffect(() => {
+    setIsOpen(open);
+   }, [open]);
+
 
     const openModal = () => {
       setIsOpen(true);
@@ -30,8 +34,9 @@ function Modals({children, route, setData, buttonText, styleButton}) {
         marginBottom: '60px'
       },
     };
+    
 
-
+    
     if(route && setData){
       const fetchData = async () => {
         try {

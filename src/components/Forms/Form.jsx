@@ -24,6 +24,7 @@ function Form({ onSubmit, children, successMessage, formStyle = "", buttonText =
     onSubmit(formState, setSuccess);
   };
 
+
   const childrenWithProps = React.Children.map(children, (child) => {
     if (React.isValidElement(child)) {
       return React.cloneElement(child, {

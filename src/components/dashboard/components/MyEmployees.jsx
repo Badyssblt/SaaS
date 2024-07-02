@@ -6,6 +6,9 @@ import Form from '../../Forms/Form';
 import Input from '../../inputs/Input';
 import axiosInstance from '../../../axiosInstance';
 import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import { useCompany } from '../../../context/CompanyContext';
+
 
 function MyEmployees({ company, onClick, modalIsOpen, setIsOpen }) {
   const [selectedEmployee, setSelectedEmployee] = useState(null);
@@ -13,6 +16,8 @@ function MyEmployees({ company, onClick, modalIsOpen, setIsOpen }) {
   if (Object.keys(company).length === 0) {
     return null;
   }
+
+  const {fetchCompany} = useCompany();
 
   const employeesToShow = company.employees.slice(0, 4);
   const handleEmployeeClick = (employee) => {
@@ -23,7 +28,7 @@ function MyEmployees({ company, onClick, modalIsOpen, setIsOpen }) {
 
   const handleSubmit = async (formData, setSuccess) => {
     try {
-      const response = await axiosInstance.post('/api/companies/3/employee', {
+      const response = await axiosInstance.post(`/api/companies/${Cookies.get('company')}/employee`, {
         firstName: formData.firstName,
         lastName: formData.lastName,
         birth_at: formData.birth_at,
@@ -36,7 +41,8 @@ function MyEmployees({ company, onClick, modalIsOpen, setIsOpen }) {
         hired_at: formData.hired_at
       });
       if(response.data.id){
-        setSuccess(true);
+        setSuccess(true)
+        fetchCompany();
       }
     } catch (error) {
       console.log(error);
@@ -70,10 +76,11 @@ function MyEmployees({ company, onClick, modalIsOpen, setIsOpen }) {
           </Form>
         </Modals>
       </div>
-      <div className='flex flex-col gap-4 mt-4 items-center'>
-        {employeesToShow.map((employee, index) => (
+      <div className='flex flex-col gap-4 mt-4 pb-4 items-center'>
+        {company.employees.length !== 0 && employeesToShow.map((employee, index) => (
           <EmployeeCard key={index} employee={employee} onClick={() => handleEmployeeClick(employee)} />
         ))}
+        {company.employees.length == 0 && <p>Vous n'avez aucun employés</p>}
       </div>
     </div>
   );
