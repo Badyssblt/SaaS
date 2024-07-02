@@ -90,7 +90,7 @@ class EmployeeController extends AbstractController
         $manager->persist($employee);
         $manager->flush();
 
-        return $this->json($company, Response::HTTP_OK, [], ['groups' => 'item:company']);
+        return $this->json($employee, Response::HTTP_OK, [], ['groups' => 'item:employee']);
     }
 
     #[Route("/companies/{id}/employee/{employeeId}", name: "app_company_fire_employee", methods: ["DELETE"])]

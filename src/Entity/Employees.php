@@ -81,7 +81,7 @@ class Employees
     /**
      * @var Collection<int, Leave>
      */
-    #[ORM\OneToMany(targetEntity: Leave::class, mappedBy: 'employee')]
+    #[ORM\OneToMany(targetEntity: Leave::class, mappedBy: 'employee', cascade: ["REMOVE"])]
     #[Groups(["item:leave"])]
     private Collection $leaves;
 
