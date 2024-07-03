@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-function Header() {
+function Header({ style }) {
 
     const [isToggle, setToggle] = useState(false);
 
@@ -11,9 +11,9 @@ function Header() {
 
 
   return (
-    <div>
+    <div className={style}>
         <menu className=''>
-            <div className='flex justify-between mt-4 px-4'>
+            <div className='flex justify-between py-4 px-4'>
                 <li><Link to="/home" className='font-bold text-xl'>Employefy</Link></li>
                 
                 {!isToggle && (<button className='z-50' onClick={toggleMenu}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-8">

@@ -10,15 +10,23 @@ import Cookies from 'js-cookie';
 import Button from '../buttons/Button';
 
 
-function MainDashboard({content, company}) {
+function MainDashboard({content, company, setContent}) {
   if(Object.keys(company).length == 0){
-    return;
+    return (
+      <div className='px-4 mt-8'>
+        <p className='font-bold text-center'>Vous n'avez aucune entreprise</p>
+        <Button style="primary" onClick={() => setContent('companies')}>Commencer par créer une entreprise</Button>
+        
+      </div>
+      
+      )
   }
 
   const [companies, setCompanies] = useState([]);
   
 
   const { companiesData, setCompanyId } = useCompany();
+  
 
   const employeeCount = company.employees.length;
   const leavesEmployees = company.employees.filter(employee => employee.status === 'Leave');
@@ -79,8 +87,11 @@ function MainDashboard({content, company}) {
 
   const companyCookie = Cookies.get('company');
 
+
+
+  
   return (
-    <div className='px-6 py-2 bg-slate-50 h-fit mb-12'>
+    <div className='px-6 py-2 bg-slate-50 h-fit mb-12 w-full'>
       <div>
         <div>
           <h2 className='font-bold text-xl'>Mon entreprise</h2>
@@ -101,7 +112,7 @@ function MainDashboard({content, company}) {
           </div>
 
         </div>
-        <div className='flex flex-col gap-4 mt-4 items-center'>
+        <div className='flex flex-col gap-4 mt-4 items-center md:flex-row'>
           <DashboardStats name="Employés totals" icon="users.svg"  stat={employeeCount}/>
           <DashboardStats name="Employés en congés" icon="arrow-right.svg" stat={leavesEmployees.length} />
           <DashboardStats name="Salaire moyen" icon="euros.svg" stat={salary + " €"} />

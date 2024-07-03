@@ -58,7 +58,7 @@ export const CompanyProvider = ({ children }) => {
       const response = await axiosInstance.get(`/api/companies/${Cookies.get('company')}`);
       setCompanyData(response.data);
     } catch (err) {
-      if (err.response && err.response.data.code === 401) {
+      if (err.response && err.response.status === 401) {
         navigate('/login');
       }
       setError(err);

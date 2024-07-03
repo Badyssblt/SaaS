@@ -25,7 +25,7 @@ function EmployeeDashboard() {
   return (
 
 
-    <>
+    <div className='bg-slate-50 w-full h-screen'>
     <div>
       <h2 className='font-bold text-xl p-4'>Mes entreprises</h2>
       <Modals styleButton="text-black flex justify-center px-0 text-[#6A6A6A] font-medium" buttonText={<><p>Créer une entreprise</p><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 text-primary">
@@ -42,7 +42,7 @@ function EmployeeDashboard() {
           <CompanyCard company={company} key={company.id}/>
         ))}
       </div>
-    </>
+    </div>
   )
 }
 

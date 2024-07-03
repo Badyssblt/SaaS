@@ -6,6 +6,7 @@ import { CompanyProvider } from '../context/CompanyContext';
 import EmployeeModal from '../components/modals/EmployeeModal';
 import { useNavigate } from 'react-router-dom';
 import { useCompany } from '../context/CompanyContext'
+import Header from '../components/Header';
 
 function Employees() {
     const [content, setContent] = useState('dashboard');
@@ -44,9 +45,11 @@ function Employees() {
 
   return (
     <CompanyProvider>
+      <Header/>
+      <div className='md:flex md:flex-row'>
       <AsideMenu onClick={setContent} />
       <EmployeeModal employee={selectedEmployee} isOpen={modalIsOpen} setOpen={setModalIsOpen} />
-      <div>
+      <div className='bg-slate-50 w-full h-screen'>
         <h2 className='font-bold text-xl p-4'>Mes employés</h2>
         <div className='flex flex-col gap-4 px-6 mb-14'>
             {employees && employees.employees && employees.employees.length !== 0 && employees.employees.map((employee, index) => (
@@ -56,6 +59,8 @@ function Employees() {
         </div>
 
         </div>
+      </div>
+      
     </CompanyProvider>
 
   )

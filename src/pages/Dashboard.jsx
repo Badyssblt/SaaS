@@ -7,6 +7,7 @@ import Button from '../components/buttons/Button';
 import { isAuthenticated } from '../components/utils/UserUtils';
 import { useNavigate } from 'react-router-dom';
 import MyAccount from './MyAccount';
+import Header from '../components/Header';
 
 function Dashboard() {
   const [content, setContent] = useState('dashboard');
@@ -22,34 +23,31 @@ function Dashboard() {
       return;
     }
   
-  }, [])
+  }, []);
+
 
   return (
     <CompanyProvider>
-
+      <Header style="bg-slate-50"/>
+      <div className='flex flex-row'>
       <AsideMenu onClick={setContent} />
-      <MainContent content={content} />
+      <MainContent content={content} setContent={setContent}/>
+      </div>
+      
     </CompanyProvider>
   );
 }
 
-const MainContent = ({ content }) => {
+const MainContent = ({ content, setContent }) => {
   const { companyData, loading, error } = useCompany();
-  if(Object.keys(companyData).length === 0){
-    return (
-    <div className='px-4 mt-8'>
-      <p className='font-bold text-center'>Vous n'avez aucune entreprise</p>
-      <Button style="primary">Commencer par créer une entreprise</Button>
-    </div>)
-  }
+
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
-
   return (
     <>
       {content === 'dashboard' && (
-        <MainDashboard content={content} company={companyData}>
+        <MainDashboard content={content} company={companyData} setContent={setContent}>
         </MainDashboard>
       ) || content === "companies" && (<EmployeeDashboard/>) || content === "account" && (<MyAccount/>)}
     </>

@@ -76,7 +76,7 @@ function MyEmployees({ company, onClick, modalIsOpen, setIsOpen }) {
           </Form>
         </Modals>
       </div>
-      <div className='flex flex-col gap-4 mt-4 pb-4 items-center'>
+      <div className='flex flex-col gap-4 mt-4 pb-4 items-center md:flex-row'>
         {company.employees.length !== 0 && employeesToShow.map((employee, index) => (
           <EmployeeCard key={index} employee={employee} onClick={() => handleEmployeeClick(employee)} />
         ))}
